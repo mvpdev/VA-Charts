@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+        <div class="col-lg-10">
+<h3>Users Listing</h3></div>
+      <div class="col-lg-2"> <p><a class="btn btn-info new-btn" href="{% url 'users_create'%}"><i class="glyphicon glyphicon-plus"></i> Create New User</a></p>
+          </div>
+      </div>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+         <th>User Type</th>
+         <th>Last Login</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    {% for user in object_list %}
+        <tr>
+            <td>{{ user.userid }}</td>
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.emailaddress }}</td>
+            <td>{% if user.usertype == 3 %} Admin {% else %} {{ user.get_usertype_display }}  {% endif %}</td>
+            <td>{{ user.authid.last_login }}</td>
+            <td><a href="{% url 'users_edit' user.userid%}" class="btn">Edit</a></td>
+            <td><a href="{% url 'users_delete' user.userid %}" class="btn">Delete</a></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

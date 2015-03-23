@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+{% load nvd3_tags %}
+{% block extrastyle %}
+{% endblock %}
+{% block content_container %}
+    <div id="container" style="min-width: 300px; height: 300px; margin: 1em">
+    </div>
+
+   
+   {% endblock %}
+   
+       <script type="text/javascript">
+      {% autoescape off %}
+      $(document).ready(function(){
+          $('#container').highcharts({
+              xAxis: {
+                  categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+              },
+              series: [{
+                  data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+              }]
+          });
+      });
+      {% endautoescape %}
+    </script>

@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+footer {
+	text-align: center
+}
+
+.controls input[type="text"],.controls input[type="number"], .controls input[type="email"], .controls input[type="password"], .controls select {
+	display: block;
+	width: 35%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.428571429;
+	color: #555555;
+	background-color: #ffffff;
+	background-image: none;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+span.text-danger ul.errorlist {
+	list-style-type: none;
+	padding:0;
+	margin:0
+}

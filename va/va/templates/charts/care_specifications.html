@@ -1,0 +1,129 @@
+{% extends "reports_layout.html" %} {% block content_container %}
+
+<div class="contain">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Report Filters</h3>
+		</div>
+		<div class="panel-body">
+				{% include "charts/_search.html" %}
+		</div>
+	</div>
+
+	<div class="row">
+		<br />
+		<div class="col-lg-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Facility where care was received</h3>
+				</div>
+				<div class="panel-body">
+					<div id="div_facility_where_care_received" class="all_to_pdf"></div>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Number of cases treated at health facility/post or hospital prior to death</h3>
+				</div>
+				<div class="panel-body">
+					<div id="div_cases_treated_at_facility" class="all_to_pdf"></div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<br />
+		<div class="col-lg-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title"> Number Of Cases Seen By A CHW Prior To Death</h3>
+				</div>
+				<div class="panel-body">
+					<div id="div_cases_treated_by_chw" class="all_to_pdf"></div>
+				</div>
+			</div>
+		</div>
+		</div>
+
+	
+	
+
+</div>
+
+
+<script type="text/javascript">
+{% autoescape off %}
+
+$(function () {
+    $('#div_facility_where_care_received').highcharts({{ facility_where_care_received }}); 
+    $('#div_cases_treated_at_facility').highcharts({{ cases_treated_at_facility }}); 
+    $('#div_cases_treated_by_chw').highcharts({{ cases_treated_by_chw }}); 
+    
+    
+    $('#all_to_png').click(function () { //png
+        var chart1 = $('#div_facility_where_care_received').highcharts();
+        var chart2 = $('#div_cases_treated_at_facility').highcharts();
+        var chart3 = $('#div_cases_treated_by_chw').highcharts();
+
+   
+        Highcharts.exportCharts([chart1, chart2, chart3],[]);
+
+    });
+    
+    $('#all_to_pdf').click(function () {
+        var doc = new jsPDF();
+        
+        // chart height defined here so each chart can be palced
+        // in a different position
+        var chartHeight = 150;
+        
+        // All units are in the set measurement for the document
+        // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+        doc.setFontSize(20);
+       // doc.text(35, 25, "My Exported Charts");
+        
+        //loop through each chart
+        var counter = 0;
+        $('.all_to_pdf').each(function (index) {
+            var imageData = $(this).highcharts().createCanvas();
+            pageHeight= doc.internal.pageSize.height;
+         // Before adding new content
+          y = 30; // Restart height position
+         doc.addImage(imageData, 'JPEG', 20, y, 150, chartHeight);
+            y = 500; // Height position of new content
+            if (y >= pageHeight && counter < ($('.all_to_pdf').size()-1))
+            {
+              doc.addPage();
+              y = 30; // Restart height position
+            }
+            counter++;
+         
+        });
+        
+        
+        //save with name
+        doc.save('charts.pdf');
+    });
+    
+    $('#refresh').click(function() {
+    	loc = String(location);
+    	var base = loc.split('?');
+    	window.location = base[0];
+    	
+    });
+
+    
+    
+    
+});
+
+{% endautoescape %}
+</script>
+
+
+{% endblock content_container %}

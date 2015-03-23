@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load nvd3_tags %}
+{% block extrastyle %}{{ block.super }}
+    {% include_chart_jscss %}
+    {% load_chart charttype chartdata chartcontainer extra %}
+    {% load_chart charttype1 chartdata1 chartcontainer1  %}
+	{% load_chart charttype2 chartdata2 chartcontainer2  %}
+{% endblock %}
+{% block sidebar_menu %}{% endblock %}
+
+
+{% block content_container %}
+	<div class="container">
+<div id="content-main">
+	<div class="login-container">
+    	<h1>Fruits vs Calories</h1>
+    	{% include_container chartcontainer 400 600 %}
+	</div>
+	<div class="login-container">
+    	<h1>Barchart</h1>
+    	{% include_container chartcontainer1 400 600 %}
+	</div>
+	<div class="login-container">
+    	<h1>Barchart</h1>
+    	{% include_container chartcontainer2 400 600 %}
+	</div>
+  
+</div>
+</div>
+ {% endblock %}

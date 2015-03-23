@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+        <div class="col-lg-10">
+<h3>Uploads Listing</h3></div>
+      <div class="col-lg-2"> <p><a class="btn btn-info new-btn" href="{% url 'upload_new' %}"><i class="glyphicon glyphicon-upload"></i> Upload Data</a></p>
+          </div>
+      </div>
+        
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Site</th>
+        <th>File Name</th>
+        <th>Uploaded By</th>
+        <th>Narration</th>
+        <th>Status</th>
+        <th>Date Created</th>
+        <th>refreshcache</th>
+        <th>Update</th>
+    </tr>
+    {% for file in object_list %}
+        <tr>
+            <td>{{ file.fileid }}</td>
+            <td>{{ file.siteid.name }}</td>
+            <td>{{ file.filename }}</td>
+            <td>{{ file.uploadedby.firstname }}</td>
+            <td>{{ file.narration }}</td>
+            <td>
+            {% if file.get_status_display == "Active" %}
+            <span class="label label-success">{{ file.get_status_display }}</span>
+             {% else %}
+             <span class="label label-warning">{{ file.get_status_display }}</span>
+            {% endif %}
+            </td>
+            
+            <td>{{ file.datecreated }}</td>
+           
+            <td> {{ file.refreshcache }} </td>
+            <td><a href="{% url 'upload_edit' file.fileid %}" class="btn">Edit</a></td>
+            
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

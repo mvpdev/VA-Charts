@@ -1,0 +1,151 @@
+{% load admin_static bootstrap_admin_template_tags %}
+{% load firstof from future %}
+{% display_sidebar_menu cl.has_filters as is_displaying_menu %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}| MVP VA Reports{% endblock %}</title>
+    {% block bootstrap_admin_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap_admin/css/bootstrap.min.css' %}" />
+  {% endblock bootstrap_admin_css %}
+  <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'admin/css/base.css' %}{% endblock %}" />
+  <linK href="/static/css/custom.css" rel="stylesheet">
+  <linK href="/static/css/datepicker.css" rel="stylesheet">
+  {% block extrastyle %}{% endblock %}
+
+{% if LANGUAGE_BIDI %}
+  {# PUT HERE YOUR CUSTOM RTL STYLESHEET #}
+  {% comment %}
+  <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />
+  {% endcomment %}
+{% endif %}
+
+
+{% block jquery %}
+  <script type="text/javascript" src="{% static "admin/js/jquery.js" %}"></script>
+  <script type="text/javascript" src="{% static "admin/js/jquery.init.js" %}"></script>
+  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/highcharts.js"></script>
+  <script src="/static/js/highcharts-3d.js"></script>
+  <script src="/static/js/exporting.js"></script>
+  <script src="/static/js/print_multiple.js"></script>
+  <script src="/static/js/jspdf.js"></script>
+  <script src="/static/js/canvg.js"></script>
+    <script src="/static/js/rgbcolor.js"></script>
+{% endblock jquery %}
+  <script>
+    (function ($) {
+      $(document).ready(function(){
+        $("#overlay").delay(600).fadeOut(500);
+      });
+    })(django.jQuery);
+    
+
+  </script>
+  <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
+  <script type="text/javascript">window.__admin_utc_offset__ = "{% filter escapejs %}{% now "Z" %}{% endfilter %}";</script>
+
+{% block extrahead %}{% endblock %}
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+{% load i18n %}
+
+
+</head>
+   
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}{% if not is_displaying_menu %} no-sidebar{% endif %}">
+
+  <div id="overlay">
+    <div class="spinner">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+  </div>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/matcher/home">VA Reports</a>
+			</div>
+			
+			<ul class="nav navbar-nav">
+          {% if user.is_authenticated %}
+          {% if user.is_staff %}
+          	<li><a href="{% url 'users_index' %}"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+          	<li><a href="{% url 'sites_index' %}"><span class="glyphicon glyphicon-home"></span> Millenium Villages</a></li>
+          	<li><a href="{% url 'data_upload' %}"><span class="glyphicon glyphicon-hdd"></span> Data Sources</a></li>
+          {% endif %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> Reports <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'charts_basic_info' %}{% if request.GET.siteID %}?siteID={{ request.GET.siteID }}&startDate={{ request.GET.startDate }}&endDate={{ request.GET.endDate }} {% endif %}"><span class="glyphicon glyphicon-check"></span>Causes And Age Of Death</a></li>
+                <li><a href="{% url 'charts_care_issues' %}{% if request.GET.siteID %}?siteID={{ request.GET.siteID }}&startDate={{ request.GET.startDate }}&endDate={{ request.GET.endDate }} {% endif %} "><span class="glyphicon glyphicon-thumbs-down"></span> Issues in Accessing Care</a></li>
+                <li><a href="{% url 'charts_care_specifications' %}{% if request.GET.siteID %}?siteID={{ request.GET.siteID }}&startDate={{ request.GET.startDate }}&endDate={{ request.GET.endDate }} {% endif %}"><span class="glyphicon glyphicon-eye-open"></span>  Care Specifications</a></li>
+             
+              </ul>
+            </li>
+      
+           {% endif %}
+          </ul>
+			<div class="navbar-right">
+      	  {% if user.is_authenticated %}
+      <ul class="nav navbar-nav">
+      <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="text-warning">{{ user }}<b class="caret"></b></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'django.contrib.auth.views.password_change' %}">Change Password</a></li>
+                  {% if matchUser.usertype == 1 %}
+                   <li><a href="{% url 'profile' %}">My Profile</a></li>
+                  {% elif matchUser.usertype == 2 %}
+                   <li><a href="{% url 'home' %}">My Profile</a></li>
+                  {% endif %}
+                <li><a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a></li>
+              </ul>
+            </li>
+      </ul>
+       {% endif %}
+      {% if user.is_anonymous %}
+      <div class="navbar-form">
+      <a href="{% url 'django.contrib.auth.views.login' %}"  class="btn btn-success">login</a>
+      </div>
+      {% endif %}
+    </div>
+		</div>
+	</div> 
+{% block content_container %}
+{% endblock content_container %}
+
+{% block js %}
+{% block bootstrap_admin_js %}
+  <script src="{% static 'bootstrap_admin/js/bootstrap.min.js' %}"></script>
+  <script src="/static/js/bootstrap-datepicker.js"></script>
+{% endblock bootstrap_admin_js %}
+<script type="text/javascript">
+    $(function () { 
+    	$('#id_startDate').datepicker({
+    		    format: 'yyyy-mm-dd',
+   		});
+    	
+	    $('#id_endDate').datepicker({
+		    format: 'yyyy-mm-dd',
+	    }); 
+	});
+</script>
+{% endblock js %}
+	<div class="container">
+
+		<hr>
+
+		<footer>
+			<p>&copy; MVP {% now "Y" %}</p>
+		</footer>
+	</div>
+    </body>
+    </html>

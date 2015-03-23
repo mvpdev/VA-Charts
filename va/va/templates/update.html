@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Update{% endblock %}
+
+{% block content %}
+<h3 class="text-info">Update </h3>
+ <div id="register">
+        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="control-group">
+
+        <label class="control-label">{{ field.label_tag }}</label>
+        <div class="controls">{{ field }}</div>
+        {% if field.errors %}
+        <span class="text-danger">{{ field.errors }}</span>
+        {% endif %}
+        </div>
+    {% endfor %}
+    <br/>
+    <input type="submit" value="Submit" class="btn btn-success" />
+</form>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+        <div class="col-lg-10">
+<h3>Sites Listing</h3></div>
+      <div class="col-lg-2"> <p><a class="btn btn-info new-btn" href="{% url 'sites_create'%}"><i class="glyphicon glyphicon-plus"></i> Create New Site</a></p>
+          </div>
+      </div>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Domain</th>
+        <th>Status</th>
+        <th>Date Created</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    {% for site in object_list %}
+        <tr>
+            <td>{{ site.siteid }}</td>
+            <td>{{ site.name }}</td>
+            <td>{{ site.domain }}</td>
+            <td>
+            {% if site.get_status_display == "Active" %}
+            <span class="label label-success">{{ site.get_status_display }}</span>
+             {% else %}
+             <span class="label label-warning">{{ site.get_status_display }}</span>
+            {% endif %}
+            </td>
+            <td>{{ site.datecreated }}</td>
+
+            <td><a href="{% url 'sites_edit' site.siteid %}" class="btn">Edit</a></td>
+             <td><a href="{% url 'sites_delete' site.siteid %}" class="btn">Delete</a></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-info">Warning </h3>
+<div class="alert alert-warning" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Warning</span>
+  {{error}}
+</div>
+<h3 class="text-info">Technical Details </h3>
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Technical Details:</span>
+  {{stack_display}}
+</div>
+
+
+
+
+
+{% endblock %}

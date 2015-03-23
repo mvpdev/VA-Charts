@@ -1,0 +1,117 @@
+@CHARSET "UTF-8";
+body {
+    padding-top: 50px;
+}
+
+footer {
+	text-align: center
+}
+
+.controls input[type="text"],.controls input[type="number"], .controls input[type="email"], .controls input[type="password"], .controls select {
+	display: block;
+	width: 35%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.428571429;
+	color: #555555;
+	background-color: #ffffff;
+	background-image: none;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.col-sm-10 input[type="text"], .col-sm-10 select {
+	height: 26px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.428571429;
+	color: #555555;
+	background-color: #ffffff;
+	background-image: none;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	
+}
+
+.col-sm-10 select {
+	height: 30px;
+	width: 200px;
+	border: 1px solid #fff;
+	  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+  line-height:80px;
+}
+
+.col-sm-6 label {
+	font-size: 12px;
+	font-weight:500
+}
+span.text-danger ul.errorlist {
+	list-style-type: none;
+	padding:0;
+	margin:0
+}
+
+.search-btn {
+	line-height:14px; 
+	font-size: 12px
+}
+
+.dropdown-menu>li>a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 2;
+  color: #333;
+  white-space: nowrap;
+}
+
+.contain {
+	position: relative;
+	width:97%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
+}
+
+h3.panel-title {
+	text-transform: capitalize;
+}
+
+h2.reports_header {
+  color: #00BFFF;
+  font-family: 'PT Sans',Arial,sans-serif;
+  font-size: 18px;
+  font-weight: 100;
+  text-align: left;
+}
+h4.date_filter {
+	font-style: italic;
+	font-weight: 500;
+}
+
+h4.date_filter span {
+	font-size: 80%;
+}
+
+
+h5.last_updated {
+	font-style: italic;
+	font-weight: 400;
+}
+
+h5.last_updated span {
+	font-weight: 600;
+	font-size: 90%
+}

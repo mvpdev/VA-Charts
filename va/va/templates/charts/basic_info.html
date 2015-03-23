@@ -1,0 +1,151 @@
+{% extends "reports_layout.html" %}
+{% block content_container %}
+<div class="contain">
+  		{% include "charts/_search.html" %}
+	<div class="row"><br/>
+	<div class="col-lg-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Cause Of Death By Location</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_cause_of_death_by_location" class="all_to_pdf">
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Proportion of Cause of Deaths - All Locations</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_cause_of_death_all_locations" class="all_to_pdf">
+				</div>
+			</div>
+		</div>
+	
+	</div>
+	</div>
+	
+	<div class="row"><br/>
+		<div class="col-lg-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Number Of Deaths By Age Group Per Month</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_death_by_month" class="all_to_pdf">
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Number Of Deaths By Age Group And Cause</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_death_by_agegroup_and_cause" class="all_to_pdf">
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	
+	<div class="row"><br/>
+			<div class="col-lg-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Age At Death</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_age_at_death" class="all_to_pdf">
+				</div>
+			</div>
+		</div>
+	
+	</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+{% autoescape off %}
+
+$(function () {
+	//var jsonObj = $.parseJSON('[' + {{ age_at_death }} + ']');
+    $('#div_cause_of_death_all_locations').highcharts({{ cause_of_death_all_locations }});
+    $('#div_death_by_agegroup_and_cause').highcharts({{ death_by_agegroup_and_cause }});
+    $('#div_death_by_month').highcharts({{ death_by_month }});
+    $('#div_age_at_death').highcharts( eval({{ age_at_death }}));
+    $('#div_cause_of_death_by_location').highcharts({{ cause_of_death_by_location }});
+    
+    $('#all_to_png').click(function () { //png
+        var chart1 = $('#div_cause_of_death_all_locations').highcharts();
+        var chart2 = $('#div_death_by_agegroup_and_cause').highcharts();
+        var chart3 = $('#div_age_at_death').highcharts();
+        var chart4 = $('#div_death_by_month').highcharts();
+        var chart5 = $('#div_cause_of_death_by_location').highcharts();
+   
+        Highcharts.exportCharts([chart1, chart2, chart3, chart4, chart5],[]);
+
+    });
+    
+    $('#all_to_pdf').click(function () {
+        var doc = new jsPDF();
+        
+        // chart height defined here so each chart can be palced
+        // in a different position
+        var chartHeight = 150;
+        
+        // All units are in the set measurement for the document
+        // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+        doc.setFontSize(20);
+       // doc.text(35, 25, "My Exported Charts");
+        
+        //loop through each chart
+        var counter = 0;
+        $('.all_to_pdf').each(function (index) {
+            var imageData = $(this).highcharts().createCanvas();
+            pageHeight= doc.internal.pageSize.height;
+         // Before adding new content
+          y = 30; // Restart height position
+         doc.addImage(imageData, 'JPEG', 20, y, 150, chartHeight);
+            y = 500; // Height position of new content
+            if (y >= pageHeight && counter < ($('.all_to_pdf').size()-1))
+            {
+              doc.addPage();
+              y = 30; // Restart height position
+            }
+            counter++;
+         
+        });
+        
+        
+        //save with name
+        doc.save('charts.pdf');
+    });
+    
+    $('#refresh').click(function() {
+    	loc = String(location);
+    	var base = loc.split('?');
+    	window.location = base[0];
+    	
+    });
+    
+    
+    
+});
+
+
+
+{% endautoescape %}
+</script>
+
+
+{% endblock content_container %}
+</div>

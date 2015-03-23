@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+<div class="panel-heading">
+	<h3 class="panel-title">Report Filters</h3>
+</div>
+<div class="panel-body">
+
+	<form action="" method="get" id="search">
+		<div>
+			<fieldset class="module aligned wide">
+				<div class="row">
+					<div class="col-sm-10">
+					<label for="id_site">Current Site:</label> {{ form.siteID }}
+						<label for="id_startDate">Start Date:</label> {{ form.startDate }}
+						<label for="id_endDate">End Date:</label> {{ form.endDate }} <input
+							type="submit" value="Apply"
+							class="default btn btn-primary search-btn" />
+					</div>
+				</div>
+			</fieldset>{{ siteID }} 
+			<hr>
+		</div>
+	</form>
+	<div class="row">
+<div class="pull-left" style="padding:0 0 0 15px">{% autoescape off %}{{ title }}{% endautoescape %}</div>
+	<div class="pull-right" style="padding:70px 5px 0 0">
+		<button id="refresh" class="btn btn-danger">
+			<i class="glyphicon glyphicon-refresh"> Refresh</i>
+		</button>
+		<div class="btn-group">
+			<button type="button" class="btn btn-info">
+				<i class="glyphicon glyphicon-print"></i> Print All
+			</button>
+			<button type="button" class="btn btn-info dropdown-toggle"
+				data-toggle="dropdown" aria-expanded="false">
+				<span class="caret"></span> <span class="sr-only">Toggle
+					Dropdown</span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="#" id="all_to_png"><i
+						class="glyphicon glyphicon-picture"></i> To Image (.png)</a></li>
+				<li><a href="#" id="all_to_pdf"><i
+						class="glyphicon glyphicon-file"></i> To PDF</a></li>
+			</ul>
+		</div>
+	</div>
+	</div>
+</div>
+</div>

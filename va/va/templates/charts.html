@@ -1,0 +1,136 @@
+{% extends "reports_layout.html" %}
+{% block content_container %}
+
+<div class="containr">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+    		<h3 class="panel-title">Report Filters</h3>
+  		</div>
+	<div class="panel-body">
+	<form action="" method="get">{% csrf_token %}
+      <div>
+            <fieldset class="module aligned wide">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="id_startDate">Start Date:</label> {{ form.startDate }}
+                  <label for="id_endDate">End Date:</label> {{ form.endDate }}
+                  <input type="submit" value="Apply" class="default btn btn-primary search-btn" />
+                </div>
+              </div>
+            </fieldset>
+            <hr>
+      </div>
+    </form>
+	</div>
+	</div>
+	
+	<div class="row"><br/>
+	<div class="col-lg-6">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">Proportion of Cause of Deaths - All Locations</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_cause_of_death_all_locations">
+				</div>
+			</div>
+		</div>
+	
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h3 class="panel-title">Number of deaths by age group and cause</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_death_by_agegroup_and_cause">
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<div class="row"><br/>
+		<div class="col-lg-6">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h3 class="panel-title">Deaths by month</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_death_by_month">
+				</div>
+			
+			</div>
+		</div>
+	</div>
+		<div class="col-lg-6">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">Age at Death</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_age_at_death">
+				</div>
+			</div>
+		</div>
+	
+	</div>
+	</div>
+	
+	<div class="row"><br/>
+		<div class="col-lg-6">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h3 class="panel-title">Cause of death by location</h3>
+			</div>
+			<div class="panel-body">
+				<div id="div_cause_of_death_by_location">
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	
+	
+	
+	
+	
+</div>
+
+
+
+<script type="text/javascript">
+{% autoescape off %}
+
+$(function () {
+    $('#div_cause_of_death_all_locations').highcharts({{ cause_of_death_all_locations }});
+});
+
+$(function () {
+    $('#div_death_by_agegroup_and_cause').highcharts({{ death_by_agegroup_and_cause }});
+});
+
+$(function () {
+    $('#div_death_by_month').highcharts({{ death_by_month }});
+});
+
+$(function () {
+    $('#div_age_at_death').highcharts({{ age_at_death }});
+});
+
+
+$(function () {
+    $('#div_cause_of_death_by_location').highcharts({{ cause_of_death_by_location }});
+});
+
+
+
+{% endautoescape %}
+</script>
+
+
+{% endblock content_container %}
+
